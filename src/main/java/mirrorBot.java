@@ -4,10 +4,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class MirrorBot extends JFrame implements ActionListener{
@@ -35,8 +35,8 @@ public class MirrorBot extends JFrame implements ActionListener{
 		startBtn.addActionListener(this);
 		add(startBtn, BorderLayout.WEST );
 		
-		JTextArea msg = new JTextArea("repeation times", 1, 4);
-		add(msg);
+		JLabel msg = new JLabel("repeation times");
+		add(msg, BorderLayout.CENTER);
 		
 		JTextField textField = new JTextField(2);
 		add(textField, BorderLayout.EAST);
