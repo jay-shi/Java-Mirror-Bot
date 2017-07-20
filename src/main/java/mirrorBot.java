@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class MirrorBot extends JFrame implements ActionListener{
 
@@ -33,14 +35,19 @@ public class MirrorBot extends JFrame implements ActionListener{
 		startBtn.addActionListener(this);
 		add(startBtn, BorderLayout.WEST );
 		
+		JTextArea msg = new JTextArea("repeation times", 1, 4);
+		add(msg);
+		
+		JTextField textField = new JTextField(2);
+		add(textField, BorderLayout.EAST);
+		
 		JMenuBar menu = new JMenuBar();
 		
 		JMenu runFile = new JMenu("Run");
 		JMenuItem openText = new JMenuItem("Open Text File");
 		runFile.add(openText);
+		
 		menu.add(runFile);
-		
-		
 		setJMenuBar(menu);
 		
 		
