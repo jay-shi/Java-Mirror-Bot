@@ -1,68 +1,52 @@
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+import org.jnativehook.keyboard.NativeKeyEvent;
+import org.jnativehook.keyboard.NativeKeyListener;
+import org.jnativehook.mouse.NativeMouseEvent;
+import org.jnativehook.mouse.NativeMouseInputListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JTextField;
+public class MirrorBot implements NativeKeyListener{
+	
+	public void nativeKeyPressed(NativeKeyEvent event){
+		
+		System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(event.getKeyCode()));
 
-public class MirrorBot extends JFrame implements ActionListener{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+		if (event.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
+			try {
+				GlobalScreen.unregisterNativeHook();
+			} catch (NativeHookException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void nativeKeyReleased(NativeKeyEvent event) {
+		System.out.println("Key Released: " + NativeKeyEvent.getKeyText(event.getKeyCode()));
+	}
 
 	public static void main(String[] args) {
+		try{
+			
+			GlobalScreen.registerNativeHook();
+		}catch(NativeHookException error){
+			
+			System.err.println("failed registering native hook");
+			System.err.println(error.getMessage());
+			
+			System.exit(2);
+		}
 		
-		new MirrorBot().setVisible(true);
-	}
-	
-	//GUI layout
-	private MirrorBot(){		
-		super("Mirror-Bot"); //JFrame constructor
-		setSize(300, 100); //(width, height)
-		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);	
-		setLayout(new BorderLayout() );
+		GlobalScreen.addNativeKeyListener(new MirrorBot());
 		
-		JButton startBtn = new JButton("Start");
-		startBtn.setActionCommand("start");
-		startBtn.addActionListener(this);
-		add(startBtn, BorderLayout.WEST );
-		
-		JLabel msg = new JLabel("repeation times");
-		add(msg, BorderLayout.CENTER);
-		
-		JTextField textField = new JTextField(2);
-		add(textField, BorderLayout.EAST);
-		
-		JMenuBar menu = new JMenuBar();
-		
-		JMenu runFile = new JMenu("Run");
-		JMenuItem openText = new JMenuItem("Open Text File");
-		runFile.add(openText);
-		
-		menu.add(runFile);
-		setJMenuBar(menu);
 		
 		
 	}
-	
-	
-	public void actionPerformed(ActionEvent e){
-		
-		String eventName = e.getActionCommand();
-		
-		if(eventName.equals("start")) System.out.println("btn");
-		
+
+	public void nativeKeyTyped(NativeKeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
-	
 	
 
 }
