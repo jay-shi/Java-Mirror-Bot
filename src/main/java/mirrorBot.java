@@ -1,3 +1,5 @@
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,10 +33,19 @@ public class MirrorBot implements NativeKeyListener, NativeMouseInputListener{
 	}
 	
 	public void nativeKeyReleased(NativeKeyEvent event) {
+		
 		System.out.println("Key Released: " + NativeKeyEvent.getKeyText(event.getKeyCode()));
-	}
+		System.out.println(event.getKeyCode());
+		
+		
 
-	public static void main(String[] args) {
+		
+	}
+	
+	
+	
+
+	public static void main(String[] args) throws AWTException {
 		try{
 			
 			GlobalScreen.registerNativeHook();
@@ -58,6 +69,10 @@ public class MirrorBot implements NativeKeyListener, NativeMouseInputListener{
 		// Don't forget to disable the parent handlers.
 		logger.setUseParentHandlers(false);
 		
+		//initiate robot as test
+		Robot robot = new Robot();
+		
+		robot.mouseMove(0, 0);
 		
 		
 	}
@@ -68,7 +83,21 @@ public class MirrorBot implements NativeKeyListener, NativeMouseInputListener{
 	}
 
 	public void nativeMouseClicked(NativeMouseEvent arg0) {
-		// TODO Auto-generated method stub
+		Robot robot;
+		
+		try {
+			robot = new Robot();
+			
+			robot.keyPress(83);
+			System.out.println("sdkj");
+			robot.keyRelease(83);
+			
+			
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 
